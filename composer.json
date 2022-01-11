@@ -1,0 +1,19 @@
+{
+    "name": "blockpc/select2-wire",
+    "description": "Free Select2 Livewire package",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Blockpc\\Select2Wire\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Juan Carlos Marchant",
+            "email": "juan.marchant@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
