@@ -8,12 +8,30 @@
             "Blockpc\\Select2Wire\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Blockpc\\Select2Wire\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Juan Carlos Marchant",
             "email": "juan.marchant@gmail.com"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Blockpc\\Select2Wire\\Select2WireServiceProvider"
+            ],
+            "aliases": {
+                "Select2": "Blockpc\\Select2Wire\\Facades\\Select2"
+            }
+        }
+    },
     "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "orchestra/testbench": "6.x-dev",
+        "phpunit/phpunit": "9.5.x-dev"
+    }
 }
