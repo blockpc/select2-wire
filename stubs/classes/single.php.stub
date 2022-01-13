@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Livewire\Select2;
+
+use Livewire\Component;
+use App\Models\[CLASS_MODEL];
+
+class [SELECT_CLASS] extends Component
+{
+    public [CLASS_MODEL] $[MODEL];
+
+    public $search;
+
+    public function mount()
+    {
+        $this->[MODEL] = new [CLASS_MODEL];
+    }
+
+    public function options()
+    {
+        return [CLASS_MODEL]::where('name', 'LIKE', "%{$this->search}%")->get();
+    }
+
+    public function render()
+    {
+        return view('livewire.select2.[VIEW_NAME]', [
+            'options' => $this->options(),
+        ]);
+    }
+
+    public function clear()
+    {
+        $this->[MODEL] = new [CLASS_MODEL];
+        $this->reset('search');
+        $this->options();
+    }
+
+    public function save()
+    {
+        $this->[MODEL] = [CLASS_MODEL]::firstOrCreate(['name' => $this->search]);
+        $this->search = "";
+        $this->options();
+    }
+
+    public function set_[MODEL](int $id)
+    {
+        $this->[MODEL] = [CLASS_MODEL]::find($id);
+    }
+}

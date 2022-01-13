@@ -2,7 +2,9 @@
 
 namespace Blockpc\Select2Wire;
 
-class Select2
+use Livewire\Component;
+
+class Select2 extends Component
 {
     public function hello():string
     {

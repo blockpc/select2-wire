@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blockpc\Select2Wire\Tests;
 
 use Blockpc\Select2Wire\Select2WireServiceProvider;
+use Livewire\LivewireServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -18,6 +19,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             Select2WireServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 

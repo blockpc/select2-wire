@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blockpc\Select2Wire;
 
+use Blockpc\Select2Wire\Console\Select2SingleCommand;
 use Illuminate\Support\ServiceProvider;
 
 final class Select2WireServiceProvider extends ServiceProvider
@@ -28,6 +29,11 @@ final class Select2WireServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Register the command if we are using the application via the CLI
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Select2SingleCommand::class,
+            ]);
+        }
     }
 }

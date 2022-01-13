@@ -33,5 +33,8 @@
     "require-dev": {
         "orchestra/testbench": "6.x-dev",
         "phpunit/phpunit": "9.5.x-dev"
+    },
+    "require": {
+        "livewire/livewire": "dev-master"
     }
 }
