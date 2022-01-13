@@ -6,15 +6,29 @@ namespace Blockpc\Select2Wire\Tests\Feature;
 
 use Blockpc\Select2Wire\Tests\TestCase;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Livewire;
 
 final class CreateSingleSelect2Test extends TestCase
 {
+    private $view_foo;
+    private $class_foo;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutExceptionHandling();
+
+        // destination path of the Selecte2 class
+        $this->class_foo = app_path('Http/Livewire/Select2/FooSelect2.php');
+        $this->view_foo = resource_path('views/livewire/select2/foo-select2.blade.php');
+
+        // make sure we're starting from a clean state
+        if (File::exists($this->class_foo)) {
+            unlink($this->class_foo);
+        }
+        if (File::exists($this->view_foo)) {
+            unlink($this->view_foo);
+        }
     }
 
     /** @test */
@@ -26,41 +40,30 @@ final class CreateSingleSelect2Test extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_new_select2_class_without_model()
+    public function it_creates_a_foo_select2_class_without_model_and_create_view()
     {
-        // destination path of the Selecte2 class
-        $select2Class = app_path('Http/Livewire/Select2/FooSelect2.php');
-        $viewFile = resource_path('views/livewire/select2/foo-select2.blade.php');
-
-        // make sure we're starting from a clean state
-        if (File::exists($select2Class)) {
-            unlink($select2Class);
-            unlink($viewFile);
-        }
-        if (File::exists($viewFile)) {
-            unlink($viewFile);
-        }
-
-        $this->assertFalse(File::exists($select2Class));
+        $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
-        Artisan::call('select2:single foo');
+        $this->artisan('select2:single foo')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)? [yes/np]', 'yes');
 
-        // Assert a new file is created
-        $this->assertTrue(File::exists($select2Class));
-        $this->assertTrue(File::exists($viewFile));
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::exists($this->view_foo));
     }
 
     /** @test */
-    public function select2_livewire_foo_exists()
+    public function it_creates_a_foo_select2_class_without_model_and_no_create_view()
     {
-        Artisan::call('select2:single foo');
+        $this->assertFalse(File::exists($this->class_foo));
 
-        Livewire::test(\App\Http\Livewire\Select2\FooSelect2::class);
-            // ->assertSet('foo', \App\Models\Foo::class);
+        // Run the make command
+        $this->artisan('select2:single foo')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)? [yes/np]', 'no');
 
-        $this->assertTrue(true);
-
-        //$this->assertInstanceOf(App\Models\Foo::class, $livewire->foo);
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::missing($this->view_foo));
     }
 }

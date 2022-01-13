@@ -12,7 +12,8 @@ final class Select2SingleCommand extends Command
 {
     protected $signature = 'select2:single 
                         {name? : A name for component}
-                        {--m|model= : A name for model, If it is not provided, the value of the component name will be used}';
+                        {--m|model= : A name for model, If it is not provided, the value of the component name will be used}
+                        {--p|parent= : A name for model parent}';
 
     protected $description = 'Create a new single select2 component class';
 
@@ -39,24 +40,51 @@ final class Select2SingleCommand extends Command
             return 1;
         }
 
-        $this->parse->model = $this->option('model') ?? $this->argument('name');
+        if ( $this->option('model') ) {
+            $model = Str::ucfirst($this->option('model'));
+            if (!File::exists(app_path("Models/{$model}.php"))) {
+                if ($this->confirm("Do you wish to create {$model} model? [yes/np]", true)) {
+                    $this->call('make:model', [
+                        'name' => $model
+                    ]);
+                }
+            }
+        }
+
+        if ( $this->option('parent') ) {
+            $model = Str::ucfirst($this->option('parent'));
+            if (!File::exists(app_path("Models/{$model}.php"))) {
+                if ($this->confirm("Do you wish to create {$model} parent model? [yes/np]", true)) {
+                    $this->call('make:model', [
+                        'name' => $model
+                    ]);
+                }
+            }
+        }
 
         $this->doOtherOperations();
     }
 
     protected function doOtherOperations()
     {
-        $this->info('Preparing component Select2');
-
-        $contenido = $this->parse->createSelect2();
-        $contenido = $this->parse->copyView();
-
-        $select_class = Str::studly($this->parse->name) . 'Select2';
-        $this->info("Created a component: {$select_class}");
-    }
-
-    protected function getNameInput()
-    {
-        return Str::ucfirst(trim($this->argument('name')));
+        try {
+            $this->info('Preparing component Select2');
+    
+            $this->parse->model = $this->option('model') ?? $this->argument('name');
+            $this->parse->parent = $this->option('parent') ?? "";
+    
+            $this->parse->createSelect2();
+    
+            $select_class = Str::studly($this->parse->name) . 'Select2';
+            $this->info("Created a component: {$select_class}");
+            
+            if ($this->confirm('Do you wish to create the view file (Tailwind CSS)? [yes/np]', true)) {
+                $this->parse->createView();
+                $this->info("Created a view: resources/views/livewire/select2/{$this->argument('name')}-select2.blade.php");
+            }
+        } catch (\Throwable $th) {
+            $this->error('Error! ' . $th->getMessage());
+            return 1;
+        }
     }
 }

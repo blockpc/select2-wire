@@ -1,5 +1,5 @@
 <div>
-    <div class="my-1 w-64" x-data="{open:false}" x-on:click.away="open=false">
+    <div class="w-full" x-data="{open:false}" x-on:click.away="open=false">
         <button class="border border-gray-300 p-2 rounded text-black shadow-inner w-full flex justify-between items-center text-sm focus:outline-none" x-on:click="open=!open">
             <span class="float-left">{{$[MODEL]->name ?? 'Select [MODEL]'}}</span>
             <svg class="h-4 transform float-right fill-current text-black" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129" :class="{'rotate-180': open}">

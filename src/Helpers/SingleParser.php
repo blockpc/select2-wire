@@ -15,7 +15,7 @@ final class SingleParser extends Parser
     public $multiple;
     public $vars;
 	
-	public function createSelect2() : string
+	public function createSelect2() : void
     {
         $class_model = Str::ucfirst($this->model);
         $select_class = Str::studly($this->name) . 'Select2';
@@ -24,8 +24,8 @@ final class SingleParser extends Parser
             'SELECT_CLASS' => $select_class,
             'MODEL' => $this->model,
             'VIEW_NAME' => $this->name,
-            'CLASS_PARENT' => Str::ucfirst($this->parent ?? 'parent'),
-            'PARENT' => $this->parent ?? 'parent',
+            'CLASS_PARENT' => Str::ucfirst($this->parent ?: 'parent'),
+            'PARENT' => $this->parent ?: 'parent',
             'MODEL_PLURAL' => Str::plural($this->model),
         ];
         $directory = $this->get_type_class();
@@ -42,11 +42,9 @@ final class SingleParser extends Parser
         }
         $file = "{$path}/{$select_class}.php";
         file_put_contents($file, $content);
-
-        return $content;
     }
 
-    public function copyView() : void
+    public function createView() : void
     {
         $view = $this->get_type_view();
         $content = file_get_contents($view);
