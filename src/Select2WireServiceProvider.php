@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blockpc\Select2Wire;
 
 use Blockpc\Select2Wire\Console\Select2SingleCommand;
+use Blockpc\Select2Wire\Console\Selecte2MulitpleCommand;
 use Illuminate\Support\ServiceProvider;
 
 final class Select2WireServiceProvider extends ServiceProvider
@@ -33,6 +34,7 @@ final class Select2WireServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Select2SingleCommand::class,
+                Selecte2MulitpleCommand::class,
             ]);
         }
     }

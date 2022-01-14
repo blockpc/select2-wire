@@ -2,6 +2,10 @@
 
 namespace App\Http\Livewire\Select2\Traits;
 
+/**
+ * Trait for Single / Parent Component Select2
+ * @package Blockpc\Select2Wire
+ */
 trait SingleTrait
 {
     public function getListeners()

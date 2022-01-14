@@ -7,12 +7,11 @@ namespace Blockpc\Select2Wire\Helpers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
-final class SingleParser extends Parser
+final class MultipleParser extends Parser
 {
     public $name;
     public $model;
     public $parent;
-    public $multiple;
     public $vars;
 	
 	public function createSelect2() : void
@@ -82,12 +81,14 @@ final class SingleParser extends Parser
     protected function get_type_class() : string
     {
         return $this->parent 
-            ? __DIR__ . '/../../stubs/classes/single-parent.php.stub' 
-            : __DIR__ . '/../../stubs/classes/single.php.stub';
+            ? __DIR__ . '/../../stubs/classes/multiple-parent.stub'
+            : __DIR__ . '/../../stubs/classes/multiple.stub';
     }
 
     protected function get_type_view() : string
     {
-        return __DIR__ . '/../../stubs/views/tailwind/single.stub';
+        return $this->parent 
+            ? __DIR__ . '/../../stubs/views/tailwind/multiple-parent.stub'
+            : __DIR__ . '/../../stubs/views/tailwind/multiple.stub';
     }
 }

@@ -7,6 +7,10 @@ namespace App\Http\Livewire\Select2;
 use Livewire\Component;
 use App\Models\[CLASS_MODEL];
 
+/**
+ * Single / Parent Component Select2
+ * @package Blockpc\Select2Wire
+ */
 class [SELECT_CLASS] extends Component
 {
     public [CLASS_MODEL] $[MODEL];

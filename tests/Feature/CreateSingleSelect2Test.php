@@ -23,17 +23,6 @@ final class CreateSingleSelect2Test extends TestCase
         $this->trait = app_path('Http/Livewire/Select2/Traits/SingleTrait.php');
         $this->class_foo = app_path('Http/Livewire/Select2/FooSelect2.php');
         $this->view_foo = resource_path('views/livewire/select2/foo-select2.blade.php');
-
-        // make sure we're starting from a clean state
-        if (File::exists($this->class_foo)) {
-            unlink($this->class_foo);
-        }
-        if (File::exists($this->view_foo)) {
-            unlink($this->view_foo);
-        }
-        if (File::exists($this->trait)) {
-            unlink($this->trait);
-        }
     }
 
     /** @test */
@@ -47,6 +36,7 @@ final class CreateSingleSelect2Test extends TestCase
     /** @test */
     public function it_creates_a_foo_select2_class_without_model_and_view()
     {
+        $this->deleteFiles();
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
@@ -63,6 +53,7 @@ final class CreateSingleSelect2Test extends TestCase
     /** @test */
     public function it_creates_a_foo_select2_class_without_model_and_without_view()
     {
+        $this->deleteFiles();
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
@@ -79,6 +70,7 @@ final class CreateSingleSelect2Test extends TestCase
     /** @test */
     public function it_creates_a_foo_select2_class_with_model_and_view()
     {
+        $this->deleteFiles();
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
@@ -95,6 +87,7 @@ final class CreateSingleSelect2Test extends TestCase
     /** @test */
     public function it_creates_a_foo_select2_class_with_model_and_without_view()
     {
+        $this->deleteFiles();
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
@@ -111,6 +104,7 @@ final class CreateSingleSelect2Test extends TestCase
     /** @test */
     public function it_create_a_foo_select2_with_parent()
     {
+        $this->deleteFiles();
         $this->assertFalse(File::exists($this->class_foo));
         $this->assertFalse(File::exists($this->trait));
 
@@ -125,5 +119,27 @@ final class CreateSingleSelect2Test extends TestCase
         $this->assertTrue(File::exists($this->class_foo));
         $this->assertTrue(File::exists($this->view_foo));
         $this->assertTrue(File::exists($this->trait));
+    }
+
+    /** @test */
+    public function cannot_create_foo_select2_when_the_component_exists()
+    {
+        $this->artisan('select2:single foo')
+            ->expectsOutput('A Component FooSelect2 exists!')
+            ->assertExitCode(1);
+    }
+
+    protected function deleteFiles() : void
+    {
+        // make sure we're starting from a clean state
+        if (File::exists($this->class_foo)) {
+            unlink($this->class_foo);
+        }
+        if (File::exists($this->view_foo)) {
+            unlink($this->view_foo);
+        }
+        if (File::exists($this->trait)) {
+            unlink($this->trait);
+        }
     }
 }
