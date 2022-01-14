@@ -62,6 +62,23 @@ final class SingleParser extends Parser
         file_put_contents($file, $content);
     }
 
+    public function createTrait() : void
+    {
+        $content = file_get_contents(__DIR__ . '/../../stubs/classes/single-trait.php.stub');
+        foreach($this->vars as $clave => $valor) {
+            $pos = strpos($content, '[' . strtoupper($clave) . ']');
+            if ( $pos !== FALSE ) {
+                $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
+            }
+        }
+        $path = app_path("Http/Livewire/Select2/Traits");
+        if ( !File::exists($path) ) {
+            File::ensureDirectoryExists($path, 0777, true, true);
+        }
+        $file = "{$path}/SingleTrait.php";
+        file_put_contents($file, $content);
+    }
+
     protected function get_type_class() : string
     {
         if ( $this->multiple ) {
@@ -70,7 +87,7 @@ final class SingleParser extends Parser
                 : __DIR__ . '/../../stubs/classes/multiple.stub';
         } else {
             return $this->parent 
-                ? __DIR__ . '/../../stubs/classes/single-parent.stub' 
+                ? __DIR__ . '/../../stubs/classes/single-parent.php.stub' 
                 : __DIR__ . '/../../stubs/classes/single.php.stub';
         }
     }

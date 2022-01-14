@@ -12,6 +12,7 @@ final class CreateSingleSelect2Test extends TestCase
 {
     private $view_foo;
     private $class_foo;
+    private $trait;
 
     public function setUp(): void
     {
@@ -19,6 +20,7 @@ final class CreateSingleSelect2Test extends TestCase
         $this->withoutExceptionHandling();
 
         // destination path of the Selecte2 class
+        $this->trait = app_path('Http/Livewire/Select2/Traits/SingleTrait.php');
         $this->class_foo = app_path('Http/Livewire/Select2/FooSelect2.php');
         $this->view_foo = resource_path('views/livewire/select2/foo-select2.blade.php');
 
@@ -28,6 +30,9 @@ final class CreateSingleSelect2Test extends TestCase
         }
         if (File::exists($this->view_foo)) {
             unlink($this->view_foo);
+        }
+        if (File::exists($this->trait)) {
+            unlink($this->trait);
         }
     }
 
@@ -40,13 +45,15 @@ final class CreateSingleSelect2Test extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_foo_select2_class_without_model_and_create_view()
+    public function it_creates_a_foo_select2_class_without_model_and_view()
     {
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
         $this->artisan('select2:single foo')
-            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)? [yes/np]', 'yes');
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
+            ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
         $this->assertTrue(File::exists($this->class_foo));
@@ -54,16 +61,69 @@ final class CreateSingleSelect2Test extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_foo_select2_class_without_model_and_no_create_view()
+    public function it_creates_a_foo_select2_class_without_model_and_without_view()
     {
         $this->assertFalse(File::exists($this->class_foo));
 
         // Run the make command
         $this->artisan('select2:single foo')
-            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)? [yes/np]', 'no');
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'no')
+            ->doesntExpectOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
         $this->assertTrue(File::exists($this->class_foo));
         $this->assertTrue(File::missing($this->view_foo));
+    }
+
+    /** @test */
+    public function it_creates_a_foo_select2_class_with_model_and_view()
+    {
+        $this->assertFalse(File::exists($this->class_foo));
+
+        // Run the make command
+        $this->artisan('select2:single foo --model=bar')
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
+            ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
+
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::exists($this->view_foo));
+    }
+
+    /** @test */
+    public function it_creates_a_foo_select2_class_with_model_and_without_view()
+    {
+        $this->assertFalse(File::exists($this->class_foo));
+
+        // Run the make command
+        $this->artisan('select2:single foo --model=bar')
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'no')
+            ->doesntExpectOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
+
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::missing($this->view_foo));
+    }
+
+    /** @test */
+    public function it_create_a_foo_select2_with_parent()
+    {
+        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->trait));
+
+        $this->artisan('select2:single foo --parent=bar')
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
+            ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php')
+            ->expectsConfirmation('Do you wish to create a trait for parent model?', 'yes')
+            ->expectsOutput('Created a trait: App/Http/Livewire/Select2/Traits/SingleTrait.php');
+
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->trait));
     }
 }

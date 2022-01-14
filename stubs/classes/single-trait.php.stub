@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Livewire\Select2\Traits;
+
+trait SingleTrait
+{
+    public function getListeners()
+    {
+        return $this->listeners = [
+            'set-[MODEL]' => 'set_[MODEL]'
+        ];
+    }
+
+    public function set_[MODEL](int $id)
+    {
+        $this->[PARENT]->[MODEL]_id = $id;
+    }
+}

@@ -42,10 +42,12 @@ class [SELECT_CLASS] extends Component
         $this->[MODEL] = [CLASS_MODEL]::firstOrCreate(['name' => $this->search]);
         $this->search = "";
         $this->options();
+        $this->emit('set-[MODEL]', $this->[MODEL]->id);
     }
 
     public function set_[MODEL](int $id)
     {
         $this->[MODEL] = [CLASS_MODEL]::find($id);
+        $this->emit('set-[MODEL]', $this->[MODEL]->id);
     }
 }

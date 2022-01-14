@@ -6,6 +6,7 @@ namespace Blockpc\Select2Wire\Console;
 
 use Blockpc\Select2Wire\Helpers\SingleParser;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 final class Select2SingleCommand extends Command
@@ -42,8 +43,8 @@ final class Select2SingleCommand extends Command
 
         if ( $this->option('model') ) {
             $model = Str::ucfirst($this->option('model'));
-            if (!File::exists(app_path("Models/{$model}.php"))) {
-                if ($this->confirm("Do you wish to create {$model} model? [yes/np]", true)) {
+            if ( ! File::exists(app_path("Models/{$model}.php")) ) {
+                if ($this->confirm("Do you wish to create {$model} model?") ) {
                     $this->call('make:model', [
                         'name' => $model
                     ]);
@@ -53,8 +54,8 @@ final class Select2SingleCommand extends Command
 
         if ( $this->option('parent') ) {
             $model = Str::ucfirst($this->option('parent'));
-            if (!File::exists(app_path("Models/{$model}.php"))) {
-                if ($this->confirm("Do you wish to create {$model} parent model? [yes/np]", true)) {
+            if ( ! File::exists(app_path("Models/{$model}.php")) ) {
+                if ($this->confirm("Do you wish to create {$model} parent model?") ) {
                     $this->call('make:model', [
                         'name' => $model
                     ]);
@@ -78,9 +79,16 @@ final class Select2SingleCommand extends Command
             $select_class = Str::studly($this->parse->name) . 'Select2';
             $this->info("Created a component: {$select_class}");
             
-            if ($this->confirm('Do you wish to create the view file (Tailwind CSS)? [yes/np]', true)) {
+            if ( $this->confirm('Do you wish to create the view file (Tailwind CSS)?', true) ) {
                 $this->parse->createView();
-                $this->info("Created a view: resources/views/livewire/select2/{$this->argument('name')}-select2.blade.php");
+                $this->info("Created a view: resources/views/livewire/select2/{$this->parse->name}-select2.blade.php");
+            }
+
+            if ( $this->option('parent') ) {
+                if ( $this->confirm('Do you wish to create a trait for parent model?', true) ) {
+                    $this->parse->createTrait();
+                    $this->info("Created a trait: App/Http/Livewire/Select2/Traits/SingleTrait.php");
+                }
             }
         } catch (\Throwable $th) {
             $this->error('Error! ' . $th->getMessage());

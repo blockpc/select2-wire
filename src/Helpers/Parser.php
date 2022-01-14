@@ -8,6 +8,8 @@ abstract class Parser
 
     abstract public function createView(): void;
 
+    abstract public function createTrait(): void;
+
     abstract protected function get_type_class() : string;
 
     abstract protected function get_type_view() : string;
