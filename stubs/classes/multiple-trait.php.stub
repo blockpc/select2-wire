@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Select2\Traits;
 
 trait MultipleTrait
 {
-    protected $listeners = [
-        'set-[MODEL]' => 'set_[MODEL]'
-    ];
+    public function initializeMultipleTrait()
+    {
+        $this->listeners = array_merge($this->listeners, [
+            'set-[MODEL]' => 'set_[MODEL]'
+        ]);
+    }
 
     public function set_[MODEL](int $id)
     {

@@ -14,7 +14,7 @@
                     <input wire:model="search" wire:keydown.enter="save" @keydown.enter="open = false; $event.target.blur()" type="text" class="border-2 rounded h-10 w-full p-2">
                 </li>
                 @forelse ($options as $item)
-                <li class="" wire:click="set_[MODEL]({{$item->id}})" x-on:click="open=false" id="[MODEL]-{{$item->id}}">
+                <li class="" wire:click="send_[MODEL]({{$item->id}})" x-on:click="open=false" id="[MODEL]-{{$item->id}}">
                     <p class="p-2 w-full text-black hover:bg-gray-300 flex justify-between items-center cursor-pointer @if($[MODEL]->id == $item->id) bg-gray-200 @endif">
                         <span>{{$item->name}}</span>
                         @if ($[MODEL]->id == $item->id)
@@ -24,7 +24,7 @@
                 </li>
                 @empty
                 <li x-on:click="open=false" id="no-[MODEL]">
-                    <p class="p-2 block text-red-800 hover:bg-red-200 cursor-pointer">Sin marcas encontradas</p>
+                    <p class="p-2 block text-red-800 hover:bg-red-200 cursor-pointer" wire:click="clear">Sin marcas encontradas</p>
                 </li>
                 @endforelse
             </ul>

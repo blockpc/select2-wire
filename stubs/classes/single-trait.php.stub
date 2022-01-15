@@ -8,11 +8,11 @@ namespace App\Http\Livewire\Select2\Traits;
  */
 trait SingleTrait
 {
-    public function getListeners()
+    public function initializeSingleTrait()
     {
-        return $this->listeners = [
+        $this->listeners = array_merge($this->listeners, [
             'set-[MODEL]' => 'set_[MODEL]'
-        ];
+        ]);
     }
 
     public function set_[MODEL](int $id)
