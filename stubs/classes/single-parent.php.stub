@@ -9,6 +9,7 @@ use App\Models\[CLASS_MODEL];
 
 /**
  * Single / Parent Component Select2
+ *
  * @package Blockpc\Select2Wire
  */
 class [SELECT_CLASS] extends Component
@@ -16,6 +17,11 @@ class [SELECT_CLASS] extends Component
     public [CLASS_MODEL] $[MODEL];
 
     public $search;
+
+    protected $listeners = [
+        'set-[MODEL]' => 'set_[MODEL]',
+        'clear'
+    ];
 
     public function mount()
     {
@@ -46,12 +52,19 @@ class [SELECT_CLASS] extends Component
         $this->[MODEL] = [CLASS_MODEL]::firstOrCreate(['name' => $this->search]);
         $this->search = "";
         $this->options();
-        $this->emit('set-[MODEL]', $this->[MODEL]->id);
+        $this->emitTo('component-parent-here', 'set-[MODEL]', $this->[MODEL]->id);
     }
 
+    /** event */
+    public function send_[MODEL](int $id)
+    {
+        $this->[MODEL] = Brand::find($id);
+        $this->emitTo('component-parent-here', 'set-[MODEL]', $this->[MODEL]->id);
+    }
+
+    /** listener */
     public function set_[MODEL](int $id)
     {
         $this->[MODEL] = [CLASS_MODEL]::find($id);
-        $this->emit('set-[MODEL]', $this->[MODEL]->id);
     }
 }

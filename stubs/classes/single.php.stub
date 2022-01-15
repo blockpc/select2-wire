@@ -44,21 +44,18 @@ class [SELECT_CLASS] extends Component
     {
         $this->[MODEL] = new [CLASS_MODEL];
         $this->reset('search');
-        $this->options();
     }
 
     public function save()
     {
         $this->[MODEL] = [CLASS_MODEL]::firstOrCreate(['name' => $this->search]);
         $this->search = "";
-        $this->options();
     }
 
     /** event */
     public function send_[MODEL](int $id)
     {
         $this->[MODEL] = Brand::find($id);
-        $this->emitTo('component-parent-here', 'set-[MODEL]', $this->[MODEL]->id);
     }
 
     /** listener */
