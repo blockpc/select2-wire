@@ -33,8 +33,11 @@ final class Select2DeleteCommand extends Command
             return 1;
         }
 
-        unlink(app_path("Http/Livewire/Select2/{$select_class}.php"));
-
-        $this->error("A Component {$select_class} was deleted!");
+        if ( $this->confirm("Do you really want to delete {$select_class} component?", true) ) {
+            unlink(app_path("Http/Livewire/Select2/{$select_class}.php"));
+            $this->info("A Component {$select_class} was deleted!");
+        } else {
+            $this->info("No action executed!");
+        }
     }
 }

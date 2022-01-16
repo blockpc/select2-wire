@@ -45,8 +45,23 @@ final class DeleteSelect2ComponentTest extends TestCase
         $this->assertTrue(File::exists($this->component));
 
         $this->artisan('select2:delete foo')
+            ->expectsConfirmation("Do you really want to delete FooSelect2 component?", 'yes')
             ->expectsOutput('A Component FooSelect2 was deleted!');
 
         $this->assertTrue(File::missing($this->component));
+    }
+
+    /** @test */
+    public function cancel_delete_a_select2_component()
+    {
+        $this->artisan('select2:single foo');
+
+        $this->assertTrue(File::exists($this->component));
+
+        $this->artisan('select2:delete foo')
+            ->expectsConfirmation("Do you really want to delete FooSelect2 component?", 'no')
+            ->expectsOutput('No action executed!');
+
+        $this->assertFalse(File::missing($this->component));
     }
 }
