@@ -12,48 +12,44 @@ final class SingleParser extends Parser
     public $name;
     public $model;
     public $parent;
-    public $multiple;
     public $vars;
-	
-	public function createSelect2() : void
+    public $class_model;
+    public $select_class;
+
+    public function setVars($name, $model, $parent) : void
     {
-        $class_model = Str::ucfirst($this->model);
-        $select_class = Str::studly($this->name) . 'Select2';
+        $this->name = $name;
+        $this->model = $model;
+        $this->parent = $parent;
+        $this->class_model = Str::ucfirst($this->model);
+        $this->select_class = Str::studly($this->name) . 'Select2';
         $this->vars = [
-            'CLASS_MODEL' => $class_model,
-            'SELECT_CLASS' => $select_class,
+            'CLASS_MODEL' => $this->class_model,
+            'SELECT_CLASS' => $this->select_class,
             'MODEL' => $this->model,
             'VIEW_NAME' => $this->name,
             'CLASS_PARENT' => Str::ucfirst($this->parent ?: 'parent'),
             'PARENT' => $this->parent ?: 'parent',
             'MODEL_PLURAL' => Str::plural($this->model),
         ];
-        $directory = $this->get_type_class();
-        $content = file_get_contents($directory);
-        foreach($this->vars as $clave => $valor) {
-            $pos = strpos($content, '[' . strtoupper($clave) . ']');
-            if ( $pos !== FALSE ) {
-                $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
-            }
-        }
+    }
+	
+	public function createSelect2() : void
+    {
+        $class = $this->get_type_class();
+        $content = $this->getContent($class);
         $path = app_path("Http/Livewire/Select2");
         if ( !File::exists($path) ) {
             File::ensureDirectoryExists($path, 0777, true, true);
         }
-        $file = "{$path}/{$select_class}.php";
+        $file = "{$path}/{$this->select_class}.php";
         file_put_contents($file, $content);
     }
 
     public function createView() : void
     {
         $view = $this->get_type_view();
-        $content = file_get_contents($view);
-        foreach($this->vars as $clave => $valor) {
-            $pos = strpos($content, '[' . strtoupper($clave) . ']');
-            if ( $pos !== FALSE ) {
-                $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
-            }
-        }
+        $content = $this->getContent($view);
         $path = resource_path("views/livewire/select2");
         if ( !File::exists($path) ) {
             File::ensureDirectoryExists($path, 0777, true, true);
@@ -64,13 +60,7 @@ final class SingleParser extends Parser
 
     public function createTrait() : void
     {
-        $content = file_get_contents(__DIR__ . '/../../stubs/classes/single-trait.php.stub');
-        foreach($this->vars as $clave => $valor) {
-            $pos = strpos($content, '[' . strtoupper($clave) . ']');
-            if ( $pos !== FALSE ) {
-                $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
-            }
-        }
+        $content = $this->getContent(__DIR__ . '/../../stubs/classes/single-trait.php.stub');
         $path = app_path("Http/Livewire/Select2/Traits");
         if ( !File::exists($path) ) {
             File::ensureDirectoryExists($path, 0777, true, true);
@@ -89,5 +79,17 @@ final class SingleParser extends Parser
     protected function get_type_view() : string
     {
         return __DIR__ . '/../../stubs/views/tailwind/single.stub';
+    }
+
+    private function getContent(string $stub) : string
+    {
+        $content = file_get_contents($stub);
+        foreach($this->vars as $clave => $valor) {
+            $pos = strpos($content, '[' . strtoupper($clave) . ']');
+            if ( $pos !== FALSE ) {
+                $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
+            }
+        }
+        return $content;
     }
 }

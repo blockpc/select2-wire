@@ -13,7 +13,7 @@ final class Select2SingleCommand extends Command
 {
     protected $signature = 'select2:single 
                         {name? : A name for component}
-                        {--m|model= : A name for model, If it is not provided, the value of the component name will be used}
+                        {--m|model= : A name for model, If it is not provided, the name of component will be used}
                         {--p|parent= : A name for model parent}';
 
     protected $description = 'Create a new single select2 component class';
@@ -71,13 +71,15 @@ final class Select2SingleCommand extends Command
     {
         try {
             $this->info('Preparing single component Select2');
-    
-            $this->parse->model = $this->option('model') ?? $this->argument('name');
-            $this->parse->parent = $this->option('parent') ?? "";
 
-            $select_class = Str::studly($this->parse->name) . 'Select2';
+            $this->parse->setVars(
+                $this->argument('name'),
+                $this->option('model'),
+                $this->option('parent')
+            );
+            
             $this->parse->createSelect2();
-            $this->info("Created a component: {$select_class}");
+            $this->info("Created a component: {$this->parse->select_class}");
             
             if ( $this->confirm('Do you wish to create the view file (Tailwind CSS)?', true) ) {
                 $this->parse->createView();

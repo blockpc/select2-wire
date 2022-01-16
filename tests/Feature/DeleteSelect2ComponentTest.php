@@ -32,8 +32,8 @@ final class DeleteSelect2ComponentTest extends TestCase
     /** @test */
     public function can_not_delete_a_select2_component_does_not_exists()
     {
-        $this->artisan('select2:delete bar')
-            ->expectsOutput('A Component BarSelect2 does not exists!')
+        $this->artisan('select2:delete fake')
+            ->expectsOutput('A Component FakeSelect2 does not exists!')
             ->assertExitCode(1);
     }
 

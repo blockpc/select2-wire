@@ -13,7 +13,7 @@ final class Selecte2MulitpleCommand extends Command
 {
     protected $signature = 'select2:multiple 
                         {name? : A name for component}
-                        {--m|model= : A name for model, If it is not provided, the value of the component name will be used}
+                        {--m|model= : A name for model, If it is not provided, the name of component will be used}
                         {--p|parent= : A name for model parent}';
     
     protected $description = 'Create a new single select2 component class';
@@ -36,11 +36,11 @@ final class Selecte2MulitpleCommand extends Command
             return 1;
         }
 
-        $select_class = Str::studly($this->parse->name) . 'Select2';
-        if ( File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
-            $this->error("A Component {$select_class} exists!");
-            return 1;
-        }
+        // $select_class = Str::studly($this->parse->name) . 'Select2';
+        // if ( File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
+        //     $this->error("A Component {$select_class} exists!");
+        //     return 1;
+        // }
 
         if ( $this->option('model') ) {
             $model = Str::ucfirst($this->option('model'));
@@ -69,6 +69,33 @@ final class Selecte2MulitpleCommand extends Command
 
     protected function doOtherOperations()
     {
-        $this->info('Preparing multiple component Select2');
+        try {
+            $this->info('Preparing multiple component Select2');
+
+            $this->parse->setVars(
+                $this->argument('name'),
+                $this->option('model'),
+                $this->option('parent')
+            );
+            
+            $this->parse->createSelect2();
+            $this->info("Created a component: {$this->parse->select_class}");
+
+            if ( $this->confirm('Do you wish to create the view file (Tailwind CSS)?', true) ) {
+                $this->parse->createView();
+                $this->info("Created a view: resources/views/livewire/select2/{$this->parse->name}-select2.blade.php");
+            }
+
+            if ( $this->option('parent') ) {
+                if ( $this->confirm('Do you wish to create a trait for parent model?', true) ) {
+                    $this->parse->createTrait();
+                    $this->info("Created a trait: App/Http/Livewire/Select2/Traits/MultipleTrait.php");
+                }
+            }
+
+        } catch (\Throwable $th) {
+            $this->error('Error! ' . $th->getMessage());
+            return 1;
+        }
     }
 }

@@ -7,12 +7,18 @@ trait MultipleTrait
     public function initializeMultipleTrait()
     {
         $this->listeners = array_merge($this->listeners, [
-            'set-[MODEL]' => 'set_[MODEL]'
+            'set-[MODEL_PLURAL]' => 'set_[MODEL_PLURAL]'
+            'remove-[MODEL_PLURAL]' => 'remove_[MODEL_PLURAL]'
         ]);
     }
 
-    public function set_[MODEL](int $id)
+    public function set_[MODEL_PLURAL](int $id)
     {
-        $this->[MODEL]->id = $id;
+        $this->[PARENT]->[MODEL_PLURAL]()->attach($id);
+    }
+
+    public function remove_[MODEL_PLURAL](int $id)
+    {
+        $this->[PARENT]->[MODEL_PLURAL]->dettach($id);
     }
 }
