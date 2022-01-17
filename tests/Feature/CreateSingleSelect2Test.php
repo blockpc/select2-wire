@@ -10,8 +10,8 @@ use Livewire\Livewire;
 
 final class CreateSingleSelect2Test extends TestCase
 {
-    private $view_foo;
-    private $class_foo;
+    private $view;
+    private $class;
     private $trait;
 
     public function setUp(): void
@@ -21,8 +21,8 @@ final class CreateSingleSelect2Test extends TestCase
 
         // destination path of the Selecte2 class
         $this->trait = app_path('Http/Livewire/Select2/Traits/SingleTrait.php');
-        $this->class_foo = app_path('Http/Livewire/Select2/FooSelect2.php');
-        $this->view_foo = resource_path('views/livewire/select2/foo-select2.blade.php');
+        $this->class = app_path('Http/Livewire/Select2/FooSelect2.php');
+        $this->view = resource_path('views/livewire/select2/foo-select2.blade.php');
     }
 
     /** @test */
@@ -37,7 +37,7 @@ final class CreateSingleSelect2Test extends TestCase
     public function it_creates_a_foo_select2_class_without_model_and_view()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
 
         // Run the make command
         $this->artisan('select2:single foo')
@@ -46,15 +46,15 @@ final class CreateSingleSelect2Test extends TestCase
             ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::exists($this->view));
     }
 
     /** @test */
     public function it_creates_a_foo_select2_class_without_model_and_without_view()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
 
         // Run the make command
         $this->artisan('select2:single foo')
@@ -63,15 +63,15 @@ final class CreateSingleSelect2Test extends TestCase
             ->doesntExpectOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::missing($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::missing($this->view));
     }
 
     /** @test */
     public function it_creates_a_foo_select2_class_with_model_and_view()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
 
         // Run the make command
         $this->artisan('select2:single foo --model=bar')
@@ -80,15 +80,15 @@ final class CreateSingleSelect2Test extends TestCase
             ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::exists($this->view));
     }
 
     /** @test */
     public function it_creates_a_foo_select2_class_with_model_and_without_view()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
 
         // Run the make command
         $this->artisan('select2:single foo --model=bar')
@@ -97,15 +97,15 @@ final class CreateSingleSelect2Test extends TestCase
             ->doesntExpectOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::missing($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::missing($this->view));
     }
 
     /** @test */
     public function it_create_a_foo_select2_with_parent()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
         $this->assertFalse(File::exists($this->trait));
 
         $this->artisan('select2:single foo --parent=bar')
@@ -116,8 +116,8 @@ final class CreateSingleSelect2Test extends TestCase
             ->expectsOutput('Created a trait: App/Http/Livewire/Select2/Traits/SingleTrait.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::exists($this->view));
         $this->assertTrue(File::exists($this->trait));
     }
 
@@ -125,7 +125,7 @@ final class CreateSingleSelect2Test extends TestCase
     public function can_create_a_foo_select2_with_parent_use_shortcut()
     {
         $this->deleteFiles();
-        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->class));
         $this->assertFalse(File::exists($this->trait));
 
         $this->artisan('select2:single foo -p bar')
@@ -136,8 +136,8 @@ final class CreateSingleSelect2Test extends TestCase
             ->expectsOutput('Created a trait: App/Http/Livewire/Select2/Traits/SingleTrait.php');
 
         // Assert a foo file component and view
-        $this->assertTrue(File::exists($this->class_foo));
-        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->class));
+        $this->assertTrue(File::exists($this->view));
         $this->assertTrue(File::exists($this->trait));
     }
 
@@ -152,11 +152,11 @@ final class CreateSingleSelect2Test extends TestCase
     protected function deleteFiles() : void
     {
         // make sure we're starting from a clean state
-        if (File::exists($this->class_foo)) {
-            unlink($this->class_foo);
+        if (File::exists($this->class)) {
+            unlink($this->class);
         }
-        if (File::exists($this->view_foo)) {
-            unlink($this->view_foo);
+        if (File::exists($this->view)) {
+            unlink($this->view);
         }
         if (File::exists($this->trait)) {
             unlink($this->trait);

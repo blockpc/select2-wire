@@ -16,11 +16,13 @@ final class Selecte2MulitpleCommand extends Command
                         {--m|model= : A name for model, If it is not provided, the name of component will be used}
                         {--p|parent= : A name for model parent}';
     
-    protected $description = 'Create a new single select2 component class';
+    protected $description = 'Create a new multiple component class select2';
 
     protected $type = 'Select2';
 
     protected $parse;
+    protected $name;
+    protected $component;
 
     public function __construct()
     {
@@ -31,14 +33,14 @@ final class Selecte2MulitpleCommand extends Command
 
     public function handle()
     {
-        if ( ! $name = $this->argument('name') ) {
+        if ( ! $this->name = $this->argument('name') ) {
             $this->error('A name is required!');
             return 1;
         }
 
-        $select_class = Str::studly($name) . 'Select2';
-        if ( File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
-            $this->error("A Component {$select_class} exists!");
+        $this->component = Str::studly($this->name) . 'Select2';
+        if ( File::exists( app_path("Http/Livewire/Select2/{$this->component}.php") ) ) {
+            $this->error("A Component {$this->component} exists!");
             return 1;
         }
 
@@ -72,18 +74,18 @@ final class Selecte2MulitpleCommand extends Command
         try {
             $this->info('Preparing multiple component Select2');
 
-            $this->parse->setVars(
+            $this->parse->sets(
                 $this->argument('name'),
                 $this->option('model'),
                 $this->option('parent')
             );
             
             $this->parse->createSelect2();
-            $this->info("Created a component: {$this->parse->select_class}");
+            $this->info("Created a component: {$this->component}");
 
             if ( $this->confirm('Do you wish to create the view file (Tailwind CSS)?', true) ) {
                 $this->parse->createView();
-                $this->info("Created a view: resources/views/livewire/select2/{$this->parse->name}-select2.blade.php");
+                $this->info("Created a view: resources/views/livewire/select2/{$this->name}-select2.blade.php");
             }
 
             if ( $this->option('parent') ) {
