@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\[CLASS_MODEL];
 
 /**
- * Multiple Component Select2
+ * Multiple Select2 Component with parent model
  *
  * @package Blockpc\Select2Wire
  */
@@ -76,8 +76,11 @@ class [SELECT_CLASS] extends Component
     /** listener */
     public function set_[MODEL_PLURAL](array $[MODEL_PLURAL])
     {
-        // This $[MODEL_PLURAL] must be an array
-        $this->[MODEL_PLURAL] = $[MODEL_PLURAL];
+        // This $[MODEL_PLURAL] must be an array with ids of [MODEL_PLURAL]
+        foreach ( $[MODEL_PLURAL] as $id ) {
+            $[MODEL] = [CLASS_MODEL]::find($id);
+            $this->[MODEL_PLURAL]->push($[MODEL]->only(['id', 'name']));
+        }
     }
 
     private function parse_search()

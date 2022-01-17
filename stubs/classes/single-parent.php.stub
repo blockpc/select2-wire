@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\[CLASS_MODEL];
 
 /**
- * Single / Parent Component Select2
+ * Single Select2 Component with parent model
  *
  * @package Blockpc\Select2Wire
  */
