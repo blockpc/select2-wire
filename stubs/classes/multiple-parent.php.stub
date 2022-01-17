@@ -17,6 +17,11 @@ class [SELECT_CLASS] extends Component
     public $search;
     public $[MODEL_PLURAL];
 
+    protected $listeners = [
+        'set-[MODEL_PLURAL]' => 'set_[MODEL_PLURAL]',
+        'clear'
+    ];
+
     public function mount()
     {
         $this->[MODEL_PLURAL] = collect([]);
@@ -36,7 +41,7 @@ class [SELECT_CLASS] extends Component
 
     public function save()
     {
-        $temporal = $this->temporal();
+        $temporal = $this->parse_search();
         foreach( $temporal as $key => $name ) {
             $[MODEL] = [CLASS_MODEL]::firstOrCreate(['name' => $name]);
             if ( ! $this->[MODEL_PLURAL]->contains('id', $[MODEL]->id) ) {
@@ -61,13 +66,21 @@ class [SELECT_CLASS] extends Component
         $this->emitTo('component-parent-here', 'remove-[MODEL]', $index);
     }
 
+    /** listener */
     public function clear()
     {
         $this->[MODEL_PLURAL] = collect([]);
         $this->search = "";
     }
 
-    private function temporal()
+    /** listener */
+    public function set_[MODEL_PLURAL](array $[MODEL_PLURAL])
+    {
+        // This $[MODEL_PLURAL] must be an array
+        $this->[MODEL_PLURAL] = $[MODEL_PLURAL];
+    }
+
+    private function parse_search()
     {
         $temporal = [];
         $temporal = explode(",", $this->search);

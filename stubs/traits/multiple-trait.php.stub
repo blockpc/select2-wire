@@ -28,4 +28,9 @@ trait MultipleTrait
     {
         $this->[MODEL_PLURAL] = array_diff($this->[MODEL_PLURAL], [$id]);
     }
+
+    public function clean_[MODEL_PLURAL]()
+    {
+        $this->[MODEL_PLURAL] = [];
+    }
 }
