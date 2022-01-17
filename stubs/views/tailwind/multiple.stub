@@ -14,7 +14,7 @@
                     <input wire:model="search" wire:keydown.enter="save" @keydown.enter="open = false; $event.target.blur()" type="text" class="border-2 rounded h-10 w-full p-2">
                 </li>
                 @forelse ($options as $item)
-                <li class="" wire:click="set_[MODEL]({{$item->id}})" x-on:click="open=false" id="[MODEL]-{{$item->id}}">
+                <li class="" wire:click="select({{$item->id}})" x-on:click="open=false" id="[MODEL]-{{$item->id}}">
                     <p class="p-2 w-full text-black hover:bg-gray-300 flex justify-between items-center cursor-pointer @if($[MODEL_PLURAL]->contains('id', $item->id)) bg-gray-200 @endif">
                         <span>{{$item->name}}</span>
                         @if ($[MODEL_PLURAL]->contains('id', $item->id))
@@ -33,7 +33,7 @@
             @foreach ($[MODEL_PLURAL] as $key => $[MODEL])
                 <div class="inline-flex items-center space-x-2 px-2 py-1 text-sm font-bold leading-none text-green-700 bg-green-300 rounded-full mb-1">
                     <span class="font-semibold">{{$[MODEL]['name']}}</span>
-                    <span wire:click="remove_[MODEL]({{$key}})" class="text-red-600 font-bold ml-2 text-base cursor-pointer">x</span>
+                    <span wire:click="remove({{$key}})" class="text-red-600 font-bold ml-2 text-base cursor-pointer">x</span>
                 </div>
             @endforeach
         </div>

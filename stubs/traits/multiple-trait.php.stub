@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Livewire\Select2\Traits;
+
+/**
+ * Trait for Multiple / Parent Component Select2
+ *
+ * @package Blockpc\Select2Wire
+ */
+trait MultipleTrait
+{
+    public $[MODEL_PLURAL] = [];
+
+    public function initializeMultipleTrait()
+    {
+        $this->listeners = array_merge($this->listeners, [
+            'set-[MODEL]' => 'set_[MODEL]',
+            'remove-[MODEL]' => 'remove_[MODEL]'
+        ]);
+    }
+
+    public function set_[MODEL](int $id)
+    {
+        $this->[MODEL_PLURAL][] = $id;
+    }
+
+    public function remove_[MODEL](int $id)
+    {
+        $this->[MODEL_PLURAL] = array_diff($this->[MODEL_PLURAL], [$id]);
+    }
+}

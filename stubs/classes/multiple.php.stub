@@ -46,24 +46,22 @@ class [SELECT_CLASS] extends Component
         $this->search = "";
     }
 
-    public function clear()
-    {
-        $this->[MODEL_PLURAL] = collect([]);
-        $this->search = "";
-    }
-
-    /** event */
-    public function set_[MODEL]([CLASS_MODEL] $[MODEL])
+    public function select([CLASS_MODEL] $[MODEL])
     {
         if ( ! $this->[MODEL_PLURAL]->contains('id', $[MODEL]->id) ) {
             $this->[MODEL_PLURAL]->push($[MODEL]->only(['id', 'name']));
         }
     }
 
-    /** event */
-    public function remove_[MODEL](int $index)
+    public function remove(int $index)
     {
         $this->[MODEL_PLURAL]->forget($index);
+    }
+
+    public function clear()
+    {
+        $this->[MODEL_PLURAL] = collect([]);
+        $this->search = "";
     }
 
     private function temporal()

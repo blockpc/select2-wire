@@ -122,6 +122,26 @@ final class CreateSingleSelect2Test extends TestCase
     }
 
     /** @test */
+    public function can_create_a_foo_select2_with_parent_use_shortcut()
+    {
+        $this->deleteFiles();
+        $this->assertFalse(File::exists($this->class_foo));
+        $this->assertFalse(File::exists($this->trait));
+
+        $this->artisan('select2:single foo -p bar')
+            ->expectsOutput('Created a component: FooSelect2')
+            ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
+            ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php')
+            ->expectsConfirmation('Do you wish to create a trait for parent model?', 'yes')
+            ->expectsOutput('Created a trait: App/Http/Livewire/Select2/Traits/SingleTrait.php');
+
+        // Assert a foo file component and view
+        $this->assertTrue(File::exists($this->class_foo));
+        $this->assertTrue(File::exists($this->view_foo));
+        $this->assertTrue(File::exists($this->trait));
+    }
+
+    /** @test */
     public function cannot_create_foo_select2_when_the_component_exists()
     {
         $this->artisan('select2:single foo')

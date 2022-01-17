@@ -28,7 +28,7 @@ class [SELECT_CLASS] extends Component
         $this->[MODEL] = new [CLASS_MODEL];
     }
 
-    public function options()
+    public function getOptionsProperty()
     {
         return [CLASS_MODEL]::where('name', 'LIKE', "%{$this->search}%")->get();
     }
@@ -36,14 +36,8 @@ class [SELECT_CLASS] extends Component
     public function render()
     {
         return view('livewire.select2.[VIEW_NAME]-select2', [
-            'options' => $this->options(),
+            'options' => $this->options,
         ]);
-    }
-
-    public function clear()
-    {
-        $this->[MODEL] = new [CLASS_MODEL];
-        $this->reset('search');
     }
 
     public function save()
@@ -52,15 +46,21 @@ class [SELECT_CLASS] extends Component
         $this->search = "";
     }
 
-    /** event */
-    public function send_[MODEL](int $id)
+    public function select([CLASS_MODEL] $[MODEL])
     {
-        $this->[MODEL] = Brand::find($id);
+        $this->[MODEL] = $[MODEL];
     }
 
     /** listener */
-    public function set_[MODEL](int $id)
+    public function clear()
     {
-        $this->[MODEL] = [CLASS_MODEL]::find($id);
+        $this->[MODEL] = new [CLASS_MODEL];
+        $this->reset('search');
+    }
+
+    /** listener */
+    public function set_[MODEL]([CLASS_MODEL] $[MODEL])
+    {
+        $this->[MODEL] = $[MODEL];
     }
 }

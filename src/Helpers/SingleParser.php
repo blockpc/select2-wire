@@ -19,7 +19,7 @@ final class SingleParser extends Parser
     public function setVars($name, $model, $parent) : void
     {
         $this->name = $name;
-        $this->model = $model;
+        $this->model = $model ?? $name;
         $this->parent = $parent;
         $this->class_model = Str::ucfirst($this->model);
         $this->select_class = Str::studly($this->name) . 'Select2';
@@ -36,37 +36,26 @@ final class SingleParser extends Parser
 	
 	public function createSelect2() : void
     {
-        $class = $this->get_type_class();
-        $content = $this->getContent($class);
+        $stub = $this->get_type_class();
         $path = app_path("Http/Livewire/Select2");
-        if ( !File::exists($path) ) {
-            File::ensureDirectoryExists($path, 0777, true, true);
-        }
         $file = "{$path}/{$this->select_class}.php";
-        file_put_contents($file, $content);
+        $this->create($stub, $path, $file);
     }
 
     public function createView() : void
     {
-        $view = $this->get_type_view();
-        $content = $this->getContent($view);
+        $stub = $this->get_type_view();
         $path = resource_path("views/livewire/select2");
-        if ( !File::exists($path) ) {
-            File::ensureDirectoryExists($path, 0777, true, true);
-        }
         $file = "{$path}/{$this->name}-select2.blade.php";
-        file_put_contents($file, $content);
+        $this->create($stub, $path, $file);
     }
 
     public function createTrait() : void
     {
-        $content = $this->getContent(__DIR__ . '/../../stubs/classes/single-trait.php.stub');
+        $stub = __DIR__ . '/../../stubs/traits/single-trait.php.stub';
         $path = app_path("Http/Livewire/Select2/Traits");
-        if ( !File::exists($path) ) {
-            File::ensureDirectoryExists($path, 0777, true, true);
-        }
         $file = "{$path}/SingleTrait.php";
-        file_put_contents($file, $content);
+        $this->create($stub, $path, $file);
     }
 
     protected function get_type_class() : string
@@ -81,7 +70,7 @@ final class SingleParser extends Parser
         return __DIR__ . '/../../stubs/views/tailwind/single.stub';
     }
 
-    private function getContent(string $stub) : string
+    private function create(string $stub, string $path, string $file) : void
     {
         $content = file_get_contents($stub);
         foreach($this->vars as $clave => $valor) {
@@ -90,6 +79,9 @@ final class SingleParser extends Parser
                 $content = str_replace('[' . strtoupper($clave) . ']', $valor, $content);
             }
         }
-        return $content;
+        if ( !File::exists($path) ) {
+            File::ensureDirectoryExists($path, 0777, true, true);
+        }
+        file_put_contents($file, $content);
     }
 }

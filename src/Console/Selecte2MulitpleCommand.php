@@ -31,16 +31,16 @@ final class Selecte2MulitpleCommand extends Command
 
     public function handle()
     {
-        if ( ! $this->parse->name = $this->argument('name') ) {
+        if ( ! $name = $this->argument('name') ) {
             $this->error('A name is required!');
             return 1;
         }
 
-        // $select_class = Str::studly($this->parse->name) . 'Select2';
-        // if ( File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
-        //     $this->error("A Component {$select_class} exists!");
-        //     return 1;
-        // }
+        $select_class = Str::studly($name) . 'Select2';
+        if ( File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
+            $this->error("A Component {$select_class} exists!");
+            return 1;
+        }
 
         if ( $this->option('model') ) {
             $model = Str::ucfirst($this->option('model'));

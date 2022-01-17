@@ -1,15 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blockpc\Select2Wire\Helpers;
 
 abstract class Parser
 {
-	abstract public function createSelect2() : void;
-
-    abstract public function createView(): void;
-
-    abstract public function createTrait(): void;
-
     abstract protected function get_type_class() : string;
 
     abstract protected function get_type_view() : string;

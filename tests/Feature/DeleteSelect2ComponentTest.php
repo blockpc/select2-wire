@@ -46,7 +46,8 @@ final class DeleteSelect2ComponentTest extends TestCase
 
         $this->artisan('select2:delete foo')
             ->expectsConfirmation("Do you really want to delete FooSelect2 component?", 'yes')
-            ->expectsOutput('A Component FooSelect2 was deleted!');
+            ->expectsOutput('A Component FooSelect2 was deleted!')
+            ->expectsOutput('A View livewire/select2/foo-select2.blade.php was deleted!');
 
         $this->assertTrue(File::missing($this->component));
     }
