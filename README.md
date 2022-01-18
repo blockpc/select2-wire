@@ -1,7 +1,7 @@
 # Select 2 Wire
 
 This package create a select2 livewire component via commands.
-The package is built under a TALL stack.
+The package is built under a TALL stack. Make sure you have the requirements (see composer.json)
 One command creates a livewire component as well as its view, plus it gives you the option to create a trait to receive basic events on a parent component.
 
 ## Installation
@@ -12,8 +12,26 @@ One command creates a livewire component as well as its view, plus it gives you 
 
 ## Commands
 
-- **Single component**: Create a component that works as a single selectable, allows you to add data on the fly
-- **Multiple component**: Create a component that works as a multiple selectable, allows you to add data on the fly, data must be separated by commas
+> **Single component**
+Create a component that works as a single selectable, allows you to add data on the fly
+
+```bash
+    php artisan select2:single
+```
+
+> **Multiple component**
+Create a component that works as a multiple selectable, allows you to add data on the fly, data must be separated by commas
+
+```bash
+    php artisan select2:multiple
+```
+
+> **Delete component**
+This commando delete a component created 
+
+```bash
+    php artisan select2:delete
+```
 
 ### Single Component Foo
 
@@ -21,7 +39,7 @@ One command creates a livewire component as well as its view, plus it gives you 
     php artisan select2:single foo
 ```
 
-This command create a `single` component select2 class (under `Livewire/Select2/FooSelect2.php` directory app) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Foo` related
+This command create a `single` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Foo` related.
 
 ### Single Component Foo with model Baz
 
@@ -31,11 +49,11 @@ This command create a `single` component select2 class (under `Livewire/Select2/
     php artisan select2:single foo -m baz
 ```
 
-This command create a `single` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related
+This command create a `single` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related.
 
 ### Single Component Foo with model Baz and parent model Taz
 
-This is the suggested command. It has the same behavior as the others but adds some events (and listeners) that allow you to interact with a foreign component (ex CRUD). It also allows you to create a trait to help you in this
+This is the suggested command. It has the same behavior as the others but adds some events (and listeners) that allow you to interact with a foreign component (ex CRUD). It also allows you to create a trait to help you in this.
 
 ```bash
     php artisan select2:single foo --model=baz --parent=taz
@@ -43,7 +61,7 @@ This is the suggested command. It has the same behavior as the others but adds s
     php artisan select2:single foo -m baz -p taz
 ```
 
-This command create a `single` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related, Gives you the option to create a trait if you need to interact with an external component (under directory app `Livewire/Select2/Traits/SingleSelect2.php`)
+This command create a `single` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related and parent model `Taz`, Gives you the option to create a trait if you need to interact with an external component (under directory app `Livewire/Select2/Traits/SingleSelect2.php`)
 
 ### Multiple Component Foo
 
@@ -51,7 +69,7 @@ This command create a `single` component select2 class (under directory app `Liv
     php artisan select2:multiple foo
 ```
 
-This command create a `multiple` component select2 class (under `Livewire/Select2/FooSelect2.php` directory app) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Foo` related
+This command create a `multiple` component select2 class (under `Livewire/Select2/FooSelect2.php` directory app) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Foo` related.
 
 ### Multiple Component Foo with model Baz
 
@@ -61,11 +79,11 @@ This command create a `multiple` component select2 class (under `Livewire/Select
     php artisan select2:multiple foo -m baz
 ```
 
-This command create a `multiple` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related
+This command create a `multiple` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related.
 
 ### Multiple Component Foo with model Baz and parent model Taz
 
-This is the suggested command. It has the same behavior as the others but adds some events (and listeners) that allow you to interact with a foreign component (ex CRUD). It also allows you to create a trait to help you in this
+This is the suggested command. It has the same behavior as the others but adds some events (and listeners) that allow you to interact with a foreign component (ex CRUD). It also allows you to create a trait to help you in this.
 
 ```bash
     php artisan select2:multiple foo --model=baz --parent=taz
@@ -73,15 +91,16 @@ This is the suggested command. It has the same behavior as the others but adds s
     php artisan select2:multiple foo -m baz -p taz
 ```
 
-This command create a `multiple` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related, Gives you the option to create a trait if you need to interact with an external component (under directory app `Livewire/Select2/Traits/MultipleSelect2.php`)
-
+This command create a `multiple` component select2 class (under directory app `Livewire/Select2/FooSelect2.php`) and one view (under directory resource `livewire/select2/foo-select2.blade.php`) with a model `Baz` related and parent model `Taz`, Gives you the option to create a trait if you need to interact with an external component (under directory app `Livewire/Select2/Traits/MultipleSelect2.php`)
 
 ## Usage
 
 ### Let's suppose
-> Our company sells vehicles and each vehicle has one code, a brand and can be in various colors
+> Our company sells vehicles and each vehicle has one code, a brand and can be in various colors.
 
-From what has been read above we understand that we have a **parent model** called `vehicle`. And it has properties like one code, one brand and many colors 
+From what has been read above we understand that we have a **parent model** called `vehicle`. And each one has properties like one name, one brand and could be has many colors.
+
+_In the example directory you find all files you needs for this tutorial_
 
 ### Brand
 The model `brand` have a relation one-to-one with parent model `vehicle`  
@@ -94,7 +113,7 @@ The model `color` have a relation many-to-many with parent model `vehicle`
 This relation we called like `multiple` relation  
 
 ### Extra Migration
-For this we need a migration that creates the table that contains the foreign keys for `color` and `vehicle` models
+For a `multiple` relation we need a migration that creates the table that contains the foreign keys for `color` and `vehicle` models
 `php artisan make:migration create_color_vehicle_table`
 
 ### Models
@@ -151,6 +170,23 @@ class Color extends Model
     }
 }
 ```
+
+### Route and Controller
+After this, we need a route and one controller
+
+- Controller: `php artisan make:controller VehiclesController -i`
+- Route: `Route::get('/vehicle', VehiclesController::class)->name('vehicles')`
+
+### Commands needed
+We run two commands
+
+- php artisan select2:single brand -p vehicle
+- php artisan select2:multiple color -p vehicle
+
+And we make sure to accept the creation of the traits. Then we add the components we created to use in the controller view. you can see the example and how it was structured.
+
+**enjoy**
+
 
 ## 💖 Support the development
 **Do you like this project? Support it by donating**
