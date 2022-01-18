@@ -1,6 +1,6 @@
 # Select2 Wire
 
-<p align="center"><a href="https://blockpc.cl" target="_blank"><img src=https://banners.beyondco.de/Select2%20Wire.png?theme=light&packageManager=composer+require&packageName=blockpc%2Fselect2-wire&pattern=architect&style=style_1&description=Select2+livewire+component&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg"></a></p>
+<p align="center"><a href="https://blockpc.cl" target="_blank"><img src="https://banners.beyondco.de/Select2%20Wire.png?theme=light&packageManager=composer+require&packageName=blockpc%2Fselect2-wire&pattern=architect&style=style_1&description=Select2+livewire+component&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg"></a></p>
 
 This package create a select2 livewire component via commands.
 The package is built under a TALL stack. Make sure you have the requirements (see composer.json)
