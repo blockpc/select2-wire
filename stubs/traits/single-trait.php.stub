@@ -7,9 +7,9 @@ namespace App\Http\Livewire\Select2\Traits;
  *
  * @package Blockpc\Select2Wire
  */
-trait SingleTrait
+trait Single[CLASS_MODEL]Trait
 {
-    public function initializeSingleTrait()
+    public function initializeSingle[CLASS_MODEL]Trait()
     {
         $this->listeners = array_merge($this->listeners, [
             'set-[MODEL]' => 'set_[MODEL]'

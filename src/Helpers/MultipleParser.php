@@ -31,7 +31,7 @@ final class MultipleParser extends Parser
     {
         $stub = __DIR__ . '/../../stubs/traits/multiple-trait.php.stub';
         $path = app_path("Http/Livewire/Select2/Traits");
-        $file = "{$path}/MultipleTrait.php";
+        $file = "{$path}/Multiple{$this->class_model}Trait.php";
         $this->create($stub, $path, $file);
     }
 

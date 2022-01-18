@@ -31,7 +31,7 @@ final class SingleParser extends Parser
     {
         $stub = __DIR__ . '/../../stubs/traits/single-trait.php.stub';
         $path = app_path("Http/Livewire/Select2/Traits");
-        $file = "{$path}/SingleTrait.php";
+        $file = "{$path}/Single{$this->class_model}Trait.php";
         $this->create($stub, $path, $file);
     }
 

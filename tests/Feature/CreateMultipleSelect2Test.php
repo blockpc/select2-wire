@@ -20,7 +20,7 @@ final class CreateMultipleSelect2Test extends TestCase
         $this->withoutExceptionHandling();
 
         // destination path of the Selecte2 class
-        $this->trait = app_path('Http/Livewire/Select2/Traits/MultipleTrait.php');
+        $this->trait = app_path('Http/Livewire/Select2/Traits/MultipleBarTrait.php');
         $this->class = app_path('Http/Livewire/Select2/BarSelect2.php');
         $this->view = resource_path('views/livewire/select2/bar-select2.blade.php');
     }

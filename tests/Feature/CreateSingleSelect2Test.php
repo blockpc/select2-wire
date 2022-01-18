@@ -20,7 +20,7 @@ final class CreateSingleSelect2Test extends TestCase
         $this->withoutExceptionHandling();
 
         // destination path of the Selecte2 class
-        $this->trait = app_path('Http/Livewire/Select2/Traits/SingleTrait.php');
+        $this->trait = app_path('Http/Livewire/Select2/Traits/SingleFooTrait.php');
         $this->class = app_path('Http/Livewire/Select2/FooSelect2.php');
         $this->view = resource_path('views/livewire/select2/foo-select2.blade.php');
     }

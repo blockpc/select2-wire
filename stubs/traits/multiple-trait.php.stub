@@ -7,11 +7,11 @@ namespace App\Http\Livewire\Select2\Traits;
  *
  * @package Blockpc\Select2Wire
  */
-trait MultipleTrait
+trait Multiple[CLASS_MODEL]Trait
 {
     public $[MODEL_PLURAL] = [];
 
-    public function initializeMultipleTrait()
+    public function initializeMultiple[CLASS_MODEL]Trait()
     {
         $this->listeners = array_merge($this->listeners, [
             'set-[MODEL]' => 'set_[MODEL]',

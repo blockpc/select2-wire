@@ -27,15 +27,15 @@ final class Select2DeleteCommand extends Command
             return 1;
         }
 
-        $select_class = Str::studly($name) . 'Select2';
-        if ( ! File::exists( app_path("Http/Livewire/Select2/{$select_class}.php") ) ) {
-            $this->error("A Component {$select_class} does not exists!");
+        $class = Str::studly($name);
+        if ( ! File::exists( app_path("Http/Livewire/Select2/{$class}Select2.php") ) ) {
+            $this->error("A Component {$class}Select2 does not exists!");
             return 1;
         }
 
-        if ( $this->confirm("Do you really want to delete {$select_class} component?", true) ) {
-            unlink(app_path("Http/Livewire/Select2/{$select_class}.php"));
-            $this->info("A Component {$select_class} was deleted!");
+        if ( $this->confirm("Do you really want to delete {$class}Select2 component?", true) ) {
+            unlink(app_path("Http/Livewire/Select2/{$class}Select2.php"));
+            $this->info("A Component {$class}Select2 was deleted!");
             unlink(resource_path("views/livewire/select2/{$name}-select2.blade.php"));
             $this->info("A View livewire/select2/{$name}-select2.blade.php was deleted!");
         } else {
