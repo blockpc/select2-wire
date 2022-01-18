@@ -116,6 +116,10 @@ This relation we called like `multiple` relation
 For a `multiple` relation we need a migration that creates the table that contains the foreign keys for `color` and `vehicle` models
 `php artisan make:migration create_color_vehicle_table`
 
+_you find all the migrations in example directory_
+
+**run mingrations**
+
 ### Models
 So, your parent model `vehicle` should look like this  
 
@@ -126,13 +130,13 @@ class Vehicle extends Model
     protected $fillable = ['code'];
 
     // one-to-one brand
-    public function brand(): belongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
     // many-to-many colors
-    public function colors(): BelongsToMany
+    public function colors(): BelongsToMany // Dont forget import this class
     {
         return $this->belongsToMany(Color::class);
     }
@@ -147,8 +151,8 @@ class Brand extends Model
     // ...
     protected $fillable = ['name'];
 
-    // one-to-many vehicles
-    public function vehicles(): HasMnay
+    // one-to-many vehicles 
+    public function vehicles(): HasMany // Dont forget import this class
     {
         return $this->hasMany(Vehicle::class);
     }
@@ -164,7 +168,7 @@ class Color extends Model
     protected $fillable = ['name'];
 
     // One color has many vehicle
-    public function vehicles(): BelongsToMany
+    public function vehicles(): BelongsToMany // Dont forget import this class
     {
         return $this->belongsToMany(Vehicle::class);
     }
@@ -175,7 +179,7 @@ class Color extends Model
 After this, we need a route and one controller
 
 - Controller: `php artisan make:controller VehiclesController -i`
-- Route: `Route::get('/vehicle', VehiclesController::class)->name('vehicles')`
+- Route: _Route::get('/vehicle', VehiclesController::class)->name('vehicles')_
 
 ### Commands needed
 We run two commands
