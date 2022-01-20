@@ -14,8 +14,8 @@ use App\Models\[CLASS_MODEL];
  */
 class [SELECT_CLASS] extends Component
 {
-    public $search;
     public $[MODEL_PLURAL];
+    public $search;
 
     public function mount()
     {

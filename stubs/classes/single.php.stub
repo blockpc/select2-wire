@@ -15,7 +15,6 @@ use App\Models\[CLASS_MODEL];
 class [SELECT_CLASS] extends Component
 {
     public [CLASS_MODEL] $[MODEL];
-
     public $search;
 
     protected $listeners = [

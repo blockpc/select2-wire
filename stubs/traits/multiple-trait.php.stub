@@ -11,13 +11,13 @@ trait Multiple[CLASS_MODEL]Trait
 {
     public $[MODEL_PLURAL] = [];
 
-    public function initializeMultiple[CLASS_MODEL]Trait()
-    {
-        $this->listeners = array_merge($this->listeners, [
-            'set-[MODEL]' => 'set_[MODEL]',
-            'remove-[MODEL]' => 'remove_[MODEL]'
-        ]);
-    }
+	public function initializeMultiple[CLASS_MODEL]Trait()
+	{
+		$this->listeners = array_merge($this->listeners, [
+			'set-[MODEL]' => 'set_[MODEL]',
+			'remove-[MODEL]' => 'remove_[MODEL]'
+		]);
+	}
 
     public function set_[MODEL](int $id)
     {
