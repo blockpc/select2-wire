@@ -29,12 +29,12 @@
             }
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require-dev": {
         "orchestra/testbench": "6.x-dev",
         "phpunit/phpunit": "9.5.x-dev"
     },
     "require": {
-        "livewire/livewire": "^2"
+        "livewire/livewire": "^2.6"
     }
 }
