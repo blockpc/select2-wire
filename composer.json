@@ -31,8 +31,8 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "orchestra/testbench": "6.x-dev",
-        "phpunit/phpunit": "9.5.x-dev"
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
     },
     "require": {
         "livewire/livewire": "^2.6"

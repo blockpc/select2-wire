@@ -13,6 +13,8 @@ final class CreateSingleSelect2Test extends TestCase
     private $view;
     private $class;
     private $trait;
+    private $bar;
+    private $foo;
 
     public function setUp(): void
     {
@@ -20,6 +22,8 @@ final class CreateSingleSelect2Test extends TestCase
         $this->withoutExceptionHandling();
 
         // destination path of the Selecte2 class
+        $this->foo = app_path('Models/Foo.php');
+        $this->bar = app_path('Models/Bar.php');
         $this->trait = app_path('Http/Livewire/Select2/Traits/SingleFooTrait.php');
         $this->class = app_path('Http/Livewire/Select2/FooSelect2.php');
         $this->view = resource_path('views/livewire/select2/foo-select2.blade.php');
@@ -75,6 +79,7 @@ final class CreateSingleSelect2Test extends TestCase
 
         // Run the make command
         $this->artisan('select2:single foo --model=bar')
+            ->expectsConfirmation('Do you wish to create Bar model?', 'yes')
             ->expectsOutput('Created a component: FooSelect2')
             ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
             ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
@@ -92,6 +97,7 @@ final class CreateSingleSelect2Test extends TestCase
 
         // Run the make command
         $this->artisan('select2:single foo --model=bar')
+            ->expectsConfirmation('Do you wish to create Bar model?', 'yes')
             ->expectsOutput('Created a component: FooSelect2')
             ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'no')
             ->doesntExpectOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php');
@@ -109,6 +115,7 @@ final class CreateSingleSelect2Test extends TestCase
         $this->assertFalse(File::exists($this->trait));
 
         $this->artisan('select2:single foo --parent=bar')
+            ->expectsConfirmation('Do you wish to create Bar parent model?', 'yes')
             ->expectsOutput('Created a component: FooSelect2')
             ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
             ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php')
@@ -129,6 +136,7 @@ final class CreateSingleSelect2Test extends TestCase
         $this->assertFalse(File::exists($this->trait));
 
         $this->artisan('select2:single foo -p bar')
+            ->expectsConfirmation('Do you wish to create Bar parent model?', 'yes')
             ->expectsOutput('Created a component: FooSelect2')
             ->expectsConfirmation('Do you wish to create the view file (Tailwind CSS)?', 'yes')
             ->expectsOutput('Created a view: resources/views/livewire/select2/foo-select2.blade.php')
@@ -152,6 +160,12 @@ final class CreateSingleSelect2Test extends TestCase
     protected function deleteFiles() : void
     {
         // make sure we're starting from a clean state
+        if (File::exists($this->foo)) {
+            unlink($this->foo);
+        }
+        if (File::exists($this->bar)) {
+            unlink($this->bar);
+        }
         if (File::exists($this->class)) {
             unlink($this->class);
         }

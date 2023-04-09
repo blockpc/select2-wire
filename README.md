@@ -200,5 +200,3 @@ And we make sure to accept the creation of the traits. Then we add the component
 - PayPal: [Donate](https://paypal.me/blockpc)
 
 Select2-Wire is open-sourced software licensed under the [MIT license](LICENSE.md).
-
-ups
