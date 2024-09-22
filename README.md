@@ -2,6 +2,11 @@
 
 <p align="center"><a href="https://blockpc.cl" target="_blank"><img src="https://banners.beyondco.de/Select2%20Wire.png?theme=light&packageManager=composer+require&packageName=blockpc%2Fselect2-wire&pattern=architect&style=style_1&description=Select2+livewire+component&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg"></a></p>
 
+## read plis
+
+This package is old... i found that create a select2 for laravel its very simple, checkout this git https://gist.github.com/blockpc/5878e8d02b1fa33a9e13ab912e9a6440
+now the gist is old version, but how to explain depends each one, the basic is the same
+
 This package create a select2 livewire component via commands.
 The package is built under a TALL stack. Make sure you have the requirements (see composer.json)
 One command creates a livewire component as well as its view, plus it gives you the option to create a trait to receive basic events on a parent component.
